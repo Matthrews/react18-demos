@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect } from "react";
-import ReactDOM from "react-dom";
+import { useState, useLayoutEffect } from "react";
+import * as ReactDOMClient from "react-dom/client";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,5 +31,7 @@ function LogEvents() {
   return null;
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const container = document.getElementById("root");
+const root = ReactDOMClient.createRoot(container);
+
+root.render(<App />);
