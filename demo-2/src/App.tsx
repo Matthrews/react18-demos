@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 
 import ProductList from "./components/ProductList";
 
@@ -20,18 +20,24 @@ function filterProducts(filterTerm: string) {
 }
 
 function App() {
+  const [isPending, startTransition] = useTransition();
   const [filterTerm, setFilterTerm] = useState("");
 
   const filteredProducts = filterProducts(filterTerm);
 
   // function updateFilterHandler(e: { target: HTMLInputElement }) {
   function updateFilterHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setFilterTerm(e.target.value);
+    // setFilterTerm(e.target.value);
+
+    startTransition(() => {
+      setFilterTerm(e.target.value);
+    });
   }
 
   return (
     <div id="app">
       <input type="text" onChange={updateFilterHandler} />
+      {isPending && <p>Updating List...</p>}
       <ProductList products={filteredProducts} />
     </div>
   );
